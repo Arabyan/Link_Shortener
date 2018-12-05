@@ -8,7 +8,7 @@ class ClickEventManager(models.Manager):
     def create_event(self, instance):
         if isinstance(KirrURL, instance):
             obj, created = self.get_or_create(kirr_url=instance)
-            obj.count+=1
+            obj.count += 1
             obj.save()
             return obj.count
         return None

@@ -35,8 +35,12 @@ class KirrURL(models.Model):
     update = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+
     objects = KirrURLManager()
+
     some_random = KirrURLManager()
+
+
 
     def save(self, *args, **kwargs):
         if self.shortcode is None or self.shortcode == "":
