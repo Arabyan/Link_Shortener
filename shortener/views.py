@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, Http404
 from django.shortcuts import render, get_object_or_404
 from django.views import View
 # Create your views here.
@@ -34,7 +34,7 @@ class HomeView(View):
             obj, created = KirrURL.objects.get_or_create(url=new_url)
             context = {
                 "object":obj,
-                "created": created
+                "created": created,
             }
             if created:
                 template = "shortener/success.html"
@@ -44,10 +44,16 @@ class HomeView(View):
         return render(request, template,  context)
 
 
-class URLRedirect(View):
+class URLRedirectView(View):
     def get(self, request, shortcode=None, *args, **kwargs):
-        obj = get_object_or_404(KirrURL, shortcode=shortcode)
+        qs = KirrURL.objects.filter(shortcode__iexact=shortcode)
+        if qs.count() != 1 and not qs.exist():
+            raise Http404
+
+        # print(qs)
+        # obj = get_object_or_404(KirrURL, shortcode__iexact=shortcode)
         # save item
+        obj = qs.first()
         print(ClickEvent.objects.create_event(obj))
         return HttpResponseRedirect(obj.url)
 
