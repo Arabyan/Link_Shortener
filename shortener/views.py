@@ -33,7 +33,7 @@ class HomeView(View):
             new_url = form.cleaned_data.get("url")
             obj, created = KirrURL.objects.get_or_create(url=new_url)
             context = {
-                "object":obj,
+                "object": obj,
                 "created": created,
             }
             if created:
@@ -47,12 +47,8 @@ class HomeView(View):
 class URLRedirectView(View):
     def get(self, request, shortcode=None, *args, **kwargs):
         qs = KirrURL.objects.filter(shortcode__iexact=shortcode)
-        if qs.count() != 1 and not qs.exist():
+        if qs.count() != 1 and not qs.exists():
             raise Http404
-
-        # print(qs)
-        # obj = get_object_or_404(KirrURL, shortcode__iexact=shortcode)
-        # save item
         obj = qs.first()
         print(ClickEvent.objects.create_event(obj))
         return HttpResponseRedirect(obj.url)
