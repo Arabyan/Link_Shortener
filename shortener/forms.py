@@ -7,8 +7,9 @@ class SubmitUrlForm(forms.Form):
         label='',
         validators=[validate_url],
         widget = forms.TextInput(
-            attrs={"placeholder": "Long URL",
-                   "class": "form-control"
+            attrs={
+                "placeholder": "Long URL",
+                "class": "form-control"
 
                    }
         )
@@ -30,10 +31,6 @@ class SubmitUrlForm(forms.Form):
     #
     # def clean_url(self):
     #     url = self.cleaned_data['url']
-    # #     # print(url)
-    # #     # url_validator = URLValidator()
-    # #     # try:
-    # #     #     url_validator(url)
-    # #     # except:
-    # #     #     raise forms.ValidationError("Invalid URL for this field")
-    # #     # return url
+    #     if "httop" in url:
+    #         return url
+    #     return "http://" + url
