@@ -16,9 +16,11 @@ def home_view_fbv(request, *args, **kwargs):
 class HomeView(View):
     def get(self, request, *args, **kwargs):
         the_form = SubmitUrlForm()
+        bg_image = "http://static.asiawebdirect.com/m/phuket/portals/kosamui-com/homepage/chaweng-beach/pagePropertiesImage/chaweng.jpg.jpg"
         context = {
             "title": "Kirr.co",
-            "form": the_form
+            "form": the_form,
+            "bg_image": bg_image
         }
         return render(request, "shortener/home.html", context)
 
@@ -26,7 +28,8 @@ class HomeView(View):
         form = SubmitUrlForm(request.POST)
         context = {
             "title": "Kirr.co",
-            "form": form
+            "form": form,
+
         }
         template = "shortener/home.html"
         if form.is_valid():
